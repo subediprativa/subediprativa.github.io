@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Case Study: The Blind Spot of Retention: Why Stable Usage Metrics (DAU) Can Mask Future Churn. By Prativa Subedi." />
+  <title>The Blind Spot of Retention | Prativa Subedi</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET & BASE ──────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #f8fafc;
+      --bg-deep:      #f1f5f9;
+      --white:        #ffffff;
+      --ink:          #0f172a;
+      --ink-mid:      #334155;
+      --ink-muted:    #3d4f63;
+      --ink-light:    #94a3b8;
+      --teal:         #0d9488;
+      --teal-dark:    #0f766e;
+      --teal-pale:    #f0fdfa;
+      --teal-border:  #99f6e4;
+      --indigo:       #6366f1;
+      --indigo-pale:  #eef2ff;
+      --indigo-border:#c7d2fe;
+      --violet:       #8b5cf6;
+      --violet-pale:  #f5f3ff;
+      --violet-border:#ddd6fe;
+      --border:       rgba(148,163,184,0.22);
+      --shadow-sm:    0 2px 10px rgba(15,23,42,0.06);
+      --shadow-md:    0 8px 32px rgba(15,23,42,0.08);
+      --r:            16px;
+      --r-sm:         10px;
+      --max-w:        800px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── LAYOUT ────────────────────────────────────────────────────────────── */
+    .wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── NAV ───────────────────────────────────────────────────────────────── */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 60px;
+      background: rgba(248,250,252,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+    }
+
+    .site-nav .wrap {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .nav-back:hover { color: var(--teal); }
+
+    .nav-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--teal-dark);
+      background: var(--teal-pale);
+      border: 1.5px solid var(--teal-border);
+      padding: 8px 18px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .nav-download svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .nav-download:hover { background: var(--teal); color: var(--white); border-color: var(--teal); }
+
+    /* ── PROGRESS BAR ──────────────────────────────────────────────────────── */
+    #progress {
+      position: fixed;
+      top: 60px; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(to right, var(--teal), var(--indigo));
+      z-index: 99;
+      transition: width 0.08s linear;
+    }
+
+    /* ── SECTION NAV ───────────────────────────────────────────────────────── */
+    .section-nav {
+      position: sticky;
+      top: 60px;
+      z-index: 50;
+      background: rgba(248,250,252,0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: none;
+    }
+    @media (min-width: 580px) { .section-nav { display: block; } }
+
+    .section-nav .wrap { width: 100%; overflow-x: auto; }
+
+    .section-nav ul { list-style: none; display: flex; gap: 0; }
+
+    .section-nav a {
+      display: block;
+      padding: 13px 0;
+      margin-right: 28px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .section-nav a:hover,
+    .section-nav a.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+    /* ── HERO ──────────────────────────────────────────────────────────────── */
+    .hero {
+      padding-top: 60px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 64px 24px 56px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+    .breadcrumb svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .breadcrumb .active { color: #6366f1; font-weight: 800; }
+
+    .hero h1 {
+      font-size: clamp(22px, 3.9vw, 42px);
+      font-weight: 900;
+      line-height: 1.12;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+    .hero h1 .accent { color: var(--teal); }
+
+    .hero-sub {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      max-width: 560px;
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    /* Badges */
+    .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+    .badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: var(--bg-deep);
+      color: var(--ink-mid);
+      border: 1px solid var(--border);
+    }
+
+    /* Stat boxes */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 480px) { .stat-row { grid-template-columns: 1fr; } }
+
+    .stat-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px 16px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--ink);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 7px;
+    }
+    .stat-lbl {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    /* Executive Summary & Metadata block labels */
+    .block-label {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .exec-box .block-label,
+    .meta-box .block-label {
+      font-size: 20px;
+    }
+
+    /* Executive summary */
+    .exec-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+      margin-bottom: 14px;
+    }
+    .exec-intro {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .exec-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 560px) { .exec-cols { grid-template-columns: 1fr; gap: 14px; } }
+
+    .exec-col {
+      border-radius: var(--r-sm);
+      padding: 18px 20px;
+      border-top: 3px solid transparent;
+    }
+    .exec-col.goal   { background: var(--teal-pale);  border-top-color: var(--teal); }
+    .exec-col.result { background: #fff7ed;            border-top-color: #f97316; }
+    .exec-col.impact { background: #eff6ff;            border-top-color: #3b82f6; }
+
+    .exec-col-label {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .exec-col p {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    /* Metadata */
+    .meta-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px 28px;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 24px;
+    }
+    @media (max-width: 560px) { .meta-grid { grid-template-columns: 1fr; } }
+
+    .meta-row {
+      display: flex;
+      gap: 10px;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .meta-key { font-size: 15px; font-weight: 800; color: var(--ink); min-width: 90px; flex-shrink: 0; }
+    .meta-val { font-size: 15px; font-weight: 500; color: var(--ink); }
+
+    /* ── CONTENT SECTIONS ──────────────────────────────────────────────────── */
+    .content { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+
+    .cs-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .cs-section.visible { opacity: 1; transform: none; }
+    .cs-section:last-child { border-bottom: none; }
+
+    /* Section heading — centered, large */
+    .section-header {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .s-num {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+    .s-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      letter-spacing: 0px;
+      line-height: 1.5;
+    }
+
+    /* Section subtitle — centered, smaller */
+    .cs-section h2 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      text-align: center;
+      margin-bottom: 40px;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .body-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .body-text strong { color: var(--ink-mid); font-weight: 700; }
+    .body-text:last-child { margin-bottom: 0; }
+
+    .lead-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      line-height: 1.8;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    .lead-text strong { color: var(--ink-mid); font-weight: 700; }
+
+    /* ── IFRAME EMBEDS ─────────────────────────────────────────────────────── */
+    .img-embed {
+      border-radius: var(--r);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin: 32px 0;
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+    .img-embed iframe { display: block; width: 100%; border: none; }
+    .img-embed img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: contrast(1.06) saturate(1.02) brightness(1.01);
+    }
+    .img-embed.image2-focus img {
+      transform: none;
+    }
+    .img-embed.image1-compact {
+      max-width: 44%;
+      margin-left: auto;
+      margin-right: auto;
+      background: #ffffff;
+    }
+    .img-embed.image1-compact img {
+      transform: scale(1.12);
+      transform-origin: center;
+      background: #ffffff;
+    }
+    .img-embed.image2-focus {
+      max-width: 82%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .img-embed.image4-compact {
+      max-width: 82%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (max-width: 640px) {
+      .img-embed.image1-compact {
+        max-width: 84%;
+      }
+      .img-embed.image1-compact img {
+        transform: scale(1.08);
+      }
+      .img-embed.image2-focus {
+        max-width: 100%;
+      }
+      .img-embed.image4-compact {
+        max-width: 100%;
+      }
+    }
+
+    /* image3: extend to edge of content column so iframe renders at full column width */
+    .img-embed.force-horizontal {
+      margin-left: -24px;
+      margin-right: -24px;
+      border-radius: 0;
+      overflow: hidden;
+    }
+    .img-embed.force-horizontal iframe { width: 100%; }
+    .img-embed.force-horizontal.image3-compact {
+      margin-left: -24px;
+      margin-right: -24px;
+      width: calc(100% + 48px);
+      max-width: none;
+      border-radius: 0;
+    }
+    @media (max-width: 640px) {
+      .img-embed.force-horizontal.image3-compact {
+        max-width: 100%;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: var(--r);
+      }
+    }
+
+    /* ── RISK CALLOUT ──────────────────────────────────────────────────────── */
+    .callout-risk {
+      display: flex;
+      gap: 14px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: var(--r-sm);
+      padding: 20px 22px;
+      margin: 20px 0;
+    }
+    .callout-risk svg { width: 17px; height: 17px; stroke: #dc2626; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; margin-top: 2px; }
+    .callout-risk-label { font-size: 11px; font-weight: 800; letter-spacing: 0.5px; color: #b91c1c; margin-bottom: 4px; }
+    .callout-risk p { font-size: 12px; font-weight: 500; color: #991b1b; line-height: 1.65; }
+
+    /* ── PHASE CARDS ───────────────────────────────────────────────────────── */
+    .phase-stack { display: flex; flex-direction: column; gap: 12px; }
+
+    .phase-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px 24px;
+      display: flex;
+      gap: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .phase-badge {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+    .phase-badge.teal   { background: var(--teal-pale);   border: 1px solid var(--teal-border);   color: var(--teal-dark); }
+    .phase-badge.indigo { background: var(--indigo-pale);  border: 1px solid var(--indigo-border);  color: var(--indigo); }
+    .phase-badge.violet { background: var(--violet-pale);  border: 1px solid var(--violet-border);  color: var(--violet); }
+
+    .phase-card h3 { font-size: 16px; font-weight: 800; color: var(--ink); line-height: 1.4; margin-bottom: 6px; }
+    .phase-card h3 .meta { font-weight: 600; color: var(--ink); font-size: 14px; }
+    .phase-card p { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.7; margin-bottom: 8px; }
+
+    .phase-insight {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 7px;
+      padding: 8px 14px;
+      line-height: 1.4;
+    }
+    .phase-insight.teal   { color: var(--teal-dark);  background: var(--teal-pale);   border: 1px solid var(--teal-border); }
+    .phase-insight.indigo { color: var(--indigo);      background: var(--indigo-pale);  border: 1px solid var(--indigo-border); }
+    .phase-insight.violet { color: var(--violet);      background: var(--violet-pale);  border: 1px solid var(--violet-border); }
+
+    /* ── FINDING CARDS ─────────────────────────────────────────────────────── */
+    .finding-stack { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+
+    .finding-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px 22px;
+      display: flex;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .finding-num {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+    .finding-num.teal   { background: var(--teal-pale);   border: 1px solid var(--teal-border);   color: var(--teal-dark); }
+    .finding-num.indigo { background: var(--indigo-pale);  border: 1px solid var(--indigo-border);  color: var(--indigo); }
+    .finding-num.violet { background: var(--violet-pale);  border: 1px solid var(--violet-border);  color: var(--violet); }
+
+    .finding-card h3 { font-size: 16px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+    .finding-card p { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.7; margin: 0; }
+    .finding-card p strong { color: var(--ink); }
+
+    /* ── PULL QUOTE ────────────────────────────────────────────────────────── */
+    .pull-quote {
+      border-left: 3px solid var(--teal);
+      padding: 6px 0 6px 24px;
+      margin: 32px 0;
+    }
+    .pull-quote p {
+      font-size: 16px;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    /* ── IMPACT CARDS ──────────────────────────────────────────────────────── */
+    .impact-stack { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; }
+
+    .impact-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px 24px;
+      display: flex;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .impact-card.teal   { border-left: 3px solid var(--teal); }
+    .impact-card.indigo { border-left: 3px solid var(--indigo); }
+    .impact-card.violet { border-left: 3px solid var(--violet); }
+
+    .impact-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .impact-icon.teal   { background: var(--teal-pale);   border: 1px solid var(--teal-border); }
+    .impact-icon.indigo { background: var(--indigo-pale);  border: 1px solid var(--indigo-border); }
+    .impact-icon.violet { background: var(--violet-pale);  border: 1px solid var(--violet-border); }
+    .impact-icon svg { width: 14px; height: 14px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .impact-icon.teal   svg { stroke: var(--teal-dark); }
+    .impact-icon.indigo svg { stroke: var(--indigo); }
+    .impact-icon.violet svg { stroke: var(--violet); }
+
+    .impact-card h3 { font-size: 16px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+    .impact-card p { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.7; margin: 0; }
+    .impact-card li { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.7; }
+
+    .bullet-list { list-style: none; margin-top: 4px; display: flex; flex-direction: column; gap: 0px; }
+    .bullet-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .bullet-list li::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--indigo);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* ── REFLECTION ────────────────────────────────────────────────────────── */
+    .reflection-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 32px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .reflection-box p { font-size: 16px; font-weight: 500; color: var(--ink); line-height: 1.8; margin-bottom: 16px; }
+    .reflection-box p:last-child { margin-bottom: 0; }
+    .reflection-box strong { color: var(--ink-mid); font-weight: 700; }
+
+    .inner-quote {
+      border-left: 3px solid var(--teal);
+      padding-left: 18px;
+      margin-top: 20px;
+    }
+    .inner-quote p {
+      font-size: 15px;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--ink-mid);
+      margin-bottom: 0;
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: var(--white);
+      color: var(--ink-mid);
+      border: 1px solid var(--border);
+    }
+
+    /* ── CTA ───────────────────────────────────────────────────────────────── */
+    .cta-wrap {
+      padding: 64px 0 80px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .cta-wrap.visible { opacity: 1; transform: none; }
+
+    .cta-box {
+      background: var(--ink);
+      border-radius: var(--r);
+      padding: 52px 40px;
+      text-align: center;
+    }
+    .cta-box .block-label { color: var(--teal); margin-bottom: 12px; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+    .cta-box h2 { font-size: 22px; font-weight: 900; color: var(--white); margin-bottom: 12px; letter-spacing: -0.3px; }
+    .cta-box .cta-sub { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.45); max-width: 400px; margin: 0 auto 32px; line-height: 1.7; }
+    .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--teal);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-primary svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .btn-primary:hover { background: var(--teal-dark); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      color: rgba(255,255,255,0.55);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 100px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-ghost svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.35); }
+
+    /* ── FOOTER ────────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 24px;
+    }
+    .footer-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy { font-size: 12px; font-weight: 500; color: var(--ink-light); }
+    .footer-copy span { color: var(--teal); font-weight: 600; }
+    .footer-link { font-size: 12px; font-weight: 500; color: var(--ink-light); text-decoration: none; transition: color 0.2s; }
+    .footer-link:hover { color: var(--teal); }
+  </style>
+</head>
+
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────────────────────── -->
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html" class="nav-back">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Portfolio
+    </a>
+  </div>
+</nav>
+
+<!-- ── PROGRESS ─────────────────────────────────────────────────────────────── -->
+<div id="progress"></div>
+
+<!-- ── SECTION NAV ──────────────────────────────────────────────────────────── -->
+<div class="section-nav">
+  <div class="wrap">
+    <ul>
+      <li><a href="#problem"    class="snav">The Problem</a></li>
+      <li><a href="#methods"    class="snav">Methodological Approach</a></li>
+      <li><a href="#findings"   class="snav">Key Findings</a></li>
+      <li><a href="#impact"     class="snav">Business Impact</a></li>
+      <li><a href="#reflection" class="snav">Reflection</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── HERO ─────────────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-inner">
+
+    <div class="breadcrumb">
+      <span>Case Study 1</span>
+      <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      <span class="active">User Retention Under Brand–Value Conflict</span>
+    </div>
+
+    <h1>
+      The Blind Spot of Retention:<br>
+      <span class="accent">Why Stable Usage Metrics (DAU)<br>Can Mask Future Churn</span>
+    </h1>
+
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-lbl">Research Phases</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1,105</div>
+        <div class="stat-lbl">Participants</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">73%</div>
+        <div class="stat-lbl">Continued Usage Despite Conflict</div>
+      </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="exec-box">
+      <div class="block-label">Executive Summary</div>
+      <p class="exec-intro">I led a 3-phase quantitative research initiative (N=1,105; survey, experiment) to decouple actual usage from true loyalty, revealing the hidden drivers of user retention.</p>
+      <div class="exec-cols">
+        <div class="exec-col goal">
+          <div class="exec-col-label">Goal</div>
+          <p>Decouple actual usage from true brand loyalty in mature tech ecosystems with high switching costs.</p>
+        </div>
+        <div class="exec-col result">
+          <div class="exec-col-label">Result</div>
+          <p>Discovered hidden segment of "fragile users" who intend to churn despite stable daily usage, proving DAU is a flawed metric for loyalty.</p>
+        </div>
+        <div class="exec-col impact">
+          <div class="exec-col-label">Impact</div>
+          <p>Delivered predictive diagnostic framework to Product and Marketing teams to identify "silent churn" signals before users leave.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Metadata -->
+    <div class="meta-box">
+      <div class="block-label">Role and Scope</div>
+      <div class="meta-grid">
+        <div class="meta-row">
+          <span class="meta-key">Role</span>
+          <span class="meta-val">Lead Researcher (Study Design, Data Analysis, Synthesis)</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Methods</span>
+          <span class="meta-val">Survey (N=502), Experiment (N=603)</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Context</span>
+          <span class="meta-val">Technology ecosystems with high switching costs (e.g., smartphones)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── CONTENT ───────────────────────────────────────────────────────────────── -->
+<div class="content">
+
+  <!-- ══ 01 · THE PROBLEM ══════════════════════════════════════════════════ -->
+  <section id="problem" class="cs-section">
+
+    <div class="section-header">
+      <div class="s-num">The Problem</div>
+    </div>
+
+    <div class="img-embed image1-compact">
+      <img src="images/user-retention_images/Image1-mobile.png" alt="The churn decision point — platform switching moment" />
+    </div>
+
+    <p class="body-text">
+      In mature technology ecosystems (like integrated smartphone and app environments), switching costs such as data migration friction and habit create structural inertia. Users often remain "locked in" to products long after their brand trust has declined.
+    </p>
+
+    <p class="body-text">
+      Product teams frequently rely on Daily Active Users (DAU) and retention rates to evaluate customer loyalty. However, relying purely on these metrics creates a critical blind spot: it conceals a growing population of "fragile" users who are ready to churn when a viable alternative appears.
+    </p>
+
+
+  </section>
+
+  <!-- ══ 02 · METHODOLOGICAL APPROACH ══════════════════════════════════════ -->
+  <section id="methods" class="cs-section">
+
+    <div class="section-header">
+      <div class="s-num">Methodological Approach</div>
+    </div>
+
+    <div class="img-embed force-horizontal image3-compact">
+      <img src="images/user-retention_images/Image3.png" alt="3-phase research methodology roadmap" />
+    </div>
+
+    <div class="phase-stack">
+
+      <div class="phase-card">
+        <div class="phase-badge teal">P1</div>
+        <div>
+          <h3>Phase 1: Sentiment &amp; Usage Baseline <span class="meta">· Survey, N=502</span></h3>
+          <p>Measured the baseline correlation between user's daily product usage frequency and their self-reported brand sentiment (satisfaction and trust).</p>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-badge indigo">P2</div>
+        <div>
+          <h3>Phase 2: Revealed Preference <span class="meta">· Experiment, N=502</span></h3>
+          <p>Instead of asking users if they were loyal, I designed an incentive-compatible choice task. Participants were forced to choose between financial rewards tied to their current brand versus a primary competitor to observe actual switching friction.</p>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-badge violet">P3</div>
+        <div>
+          <h3>Phase 3: Value-Conflict Stress Test <span class="meta">· Experiment, N=603</span></h3>
+          <p>Introduced A/B scenarios with varying levels of brand value conflict to identify exact behavioral threshold where functional utility (product working well) could no longer prevent user from churning.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ══ 03 · KEY FINDINGS ══════════════════════════════════════════════════ -->
+  <section id="findings" class="cs-section">
+
+    <div class="section-header">
+      <div class="s-num">Key Findings</div>
+    </div>
+    <div class="finding-stack">
+
+      <div class="finding-card">
+        <div class="finding-num teal">F1</div>
+        <div>
+          <h3>The Utility Anchor</h3>
+          <p><strong>75%</strong> of users chose rewards associated with their current brand over competitors. Functional reliability is the primary driver of retention under conflict.</p>
+        </div>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-num indigo">F2</div>
+        <div>
+          <h3>Persistence Despite Conflict</h3>
+          <p>Even when reporting strong value misalignment, <strong>73%</strong> of users intended to continue usage strictly due to ecosystem lock-in and habit.</p>
+        </div>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-num violet">F3</div>
+        <div>
+          <h3>The Silent Churn Signal</h3>
+          <p>Long before actual churn occurs, users exhibit "distancing" behaviors: reliance only on core functional features, dropping peripheral ecosystem products, and a sharp drop in referral intent.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="img-embed image2-focus">
+      <img src="images/user-retention_images/image2.png" alt="The fragile zone: product usage vs brand-self alignment matrix" />
+    </div>
+
+  </section>
+
+  <!-- ══ 04 · BUSINESS IMPACT ═══════════════════════════════════════════════ -->
+  <section id="impact" class="cs-section">
+
+    <div class="section-header">
+      <div class="s-num">Business Impact</div>
+    </div>
+
+    <div class="impact-stack">
+
+      <div class="impact-card teal">
+        <div class="impact-icon teal">
+          <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        </div>
+        <div>
+          <h3>Redefined KPIs</h3>
+          <p>Created a "Fragile User" model to flag users with high product usage but declining brand sentiment, a high-risk segment traditional analytics dashboards miss.</p>
+        </div>
+      </div>
+
+      <div class="impact-card indigo">
+        <div class="impact-icon indigo">
+          <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        </div>
+        <div>
+          <h3>Early Warning Architecture</h3>
+          <p>Established three measurable behavioral indicators that act as tripwires before churn happens:</p>
+          <ul class="bullet-list">
+            <li>Declining referral intent</li>
+            <li>Functional-only usage (dropping peripheral ecosystem products)</li>
+            <li>Reduced public association with the brand</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="impact-card violet">
+        <div class="impact-icon violet">
+          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div>
+          <h3>Calibrating Retention Tactics</h3>
+          <p>Proved empirically that while "Performance Messaging" (highlighting reliability/speed) maintains DAU in the short-term, driving long-term Customer Lifetime Value (CLV) requires active value-alignment campaigns.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="img-embed image4-compact">
+      <img src="images/user-retention_images/image4.png" alt="Fragile user segmentation: behavior vs sentiment" />
+    </div>
+
+
+  </section>
+
+  <!-- ══ 05 · REFLECTION ════════════════════════════════════════════════════ -->
+  <section id="reflection" class="cs-section">
+
+    <div class="section-header">
+      <div class="s-num">Reflection</div>
+    </div>
+    <div class="reflection-box">
+      <p>
+        This project reinforced an important lesson in user experience research: usage metrics show what users are doing, but they don't explain why they are staying. By combining behavioral experiments with sentiment measures, I was able to transform static retention data from simple usage tracking into strategic risk maps for future growth.
+      </p>
+    </div>
+
+
+  </section>
+
+
+</div><!-- /content -->
+
+<!-- ── FOOTER ────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 <span>Prativa Subedi</span></span>
+    <a href="index.html" class="footer-link">← Back to prativasubedi.com</a>
+  </div>
+</footer>
+
+<script>
+  // Reading progress
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    bar.style.width = Math.min(100, pct * 100) + '%';
+  }, { passive: true });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.cs-section, .cta-wrap').forEach(el => observer.observe(el));
+
+  // Section nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.snav');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.snav[href="#${e.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+</script>
+
+</body>
+</html>

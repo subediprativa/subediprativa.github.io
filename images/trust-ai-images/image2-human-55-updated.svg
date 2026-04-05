@@ -1,0 +1,31 @@
+<svg width="560" height="640" viewBox="0 0 560 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Perceived Humanness for Human Influencers</title>
+  <desc id="desc">A green infographic card showing 55 percent lift and the label Perceived Humanness for human influencers.</desc>
+  <rect width="560" height="640" fill="#FFFFFF"/>
+
+  <g fill="#129B71">
+    <text x="280" y="92" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="74" font-weight="800">55%</text>
+    <text x="280" y="142" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" letter-spacing="0.5">Lift</text>
+  </g>
+
+  <defs>
+    <linearGradient id="phoneBody" x1="140" y1="154" x2="308" y2="456" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#37CBB3"/>
+      <stop offset="1" stop-color="#5DA98E"/>
+    </linearGradient>
+    <linearGradient id="phoneStroke" x1="140" y1="154" x2="308" y2="456" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4AE6CD"/>
+      <stop offset="1" stop-color="#6FC7AA"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(140 154)">
+    <rect x="0" y="0" width="168" height="302" rx="28" fill="url(#phoneBody)" stroke="url(#phoneStroke)" stroke-width="10"/>
+    <path d="M38 18H130C145.464 18 158 30.536 158 46V256C158 271.464 145.464 284 130 284H38C22.536 284 10 271.464 10 256V46C10 30.536 22.536 18 38 18Z" stroke="#E6FFF8" stroke-width="4"/>
+  </g>
+
+  <g fill="#1C252C" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="280" y="544" font-size="34" font-weight="800">Perceived Humanness</text>
+    <text x="280" y="582" font-size="28" font-weight="700">(Human Influencers)</text>
+  </g>
+</svg>

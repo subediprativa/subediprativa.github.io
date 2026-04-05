@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Case Study 2: The Adoption Gap: Why Mainstream Users Reject Emerging Tech Hype. By Prativa Subedi." />
+  <title>The Adoption Gap | Prativa Subedi</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET & BASE ──────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #f8fafc;
+      --bg-deep:      #f1f5f9;
+      --white:        #ffffff;
+      --ink:          #0f172a;
+      --ink-mid:      #334155;
+      --ink-muted:    #3d4f63;
+      --ink-light:    #94a3b8;
+      --teal:         #0d9488;
+      --teal-dark:    #0f766e;
+      --teal-pale:    #f0fdfa;
+      --teal-border:  #99f6e4;
+      --indigo:       #6366f1;
+      --indigo-pale:  #eef2ff;
+      --indigo-border:#c7d2fe;
+      --violet:       #8b5cf6;
+      --violet-pale:  #f5f3ff;
+      --violet-border:#ddd6fe;
+      --border:       rgba(148,163,184,0.22);
+      --shadow-sm:    0 2px 10px rgba(15,23,42,0.06);
+      --shadow-md:    0 8px 32px rgba(15,23,42,0.08);
+      --r:            16px;
+      --r-sm:         10px;
+      --max-w:        800px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── LAYOUT ────────────────────────────────────────────────────────────── */
+    .wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── NAV ───────────────────────────────────────────────────────────────── */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 60px;
+      background: rgba(248,250,252,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+    }
+
+    .site-nav .wrap {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .nav-back:hover { color: var(--teal); }
+
+    .nav-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: #166534;
+      border: 1.5px solid #166534;
+      padding: 8px 18px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .nav-download svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .nav-download:hover { background: #14532d; border-color: #14532d; }
+
+    /* ── PROGRESS BAR ──────────────────────────────────────────────────────── */
+    #progress {
+      position: fixed;
+      top: 60px; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(to right, var(--teal), var(--indigo));
+      z-index: 99;
+      transition: width 0.08s linear;
+    }
+
+    /* ── SECTION NAV ───────────────────────────────────────────────────────── */
+    .section-nav {
+      position: sticky;
+      top: 60px;
+      z-index: 50;
+      background: rgba(248,250,252,0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: none;
+    }
+    @media (min-width: 580px) { .section-nav { display: block; } }
+
+    .section-nav .wrap { width: 100%; overflow-x: auto; }
+
+    .section-nav ul { list-style: none; display: flex; gap: 0; }
+
+    .section-nav a {
+      display: block;
+      padding: 13px 0;
+      margin-right: 28px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .section-nav a:hover,
+    .section-nav a.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+    /* ── HERO ──────────────────────────────────────────────────────────────── */
+    .hero {
+      padding-top: 60px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 64px 24px 56px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+    .breadcrumb svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .breadcrumb .active { color: #6366f1; font-weight: 800; }
+
+    .hero h1 {
+      font-size: clamp(24px, 4.5vw, 44px);
+      font-weight: 900;
+      line-height: 1.12;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+    .hero h1 .accent { color: var(--teal); }
+
+    /* Stat boxes */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 480px) { .stat-row { grid-template-columns: 1fr; } }
+
+    .stat-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px 16px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--ink);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 7px;
+    }
+    .stat-lbl {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    /* Executive Summary & Metadata block labels */
+    .block-label {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .exec-box .block-label,
+    .meta-box .block-label {
+      font-size: 20px;
+    }
+
+    /* Executive summary */
+    .exec-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+      margin-bottom: 14px;
+    }
+    .exec-intro strong { color: var(--ink); }
+    .exec-intro {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .exec-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 560px) { .exec-cols { grid-template-columns: 1fr; gap: 14px; } }
+
+    .exec-col {
+      border-radius: var(--r-sm);
+      padding: 18px 20px;
+      border-top: 3px solid transparent;
+    }
+    .exec-col.goal   { background: var(--teal-pale);   border-top-color: var(--teal); }
+    .exec-col.result { background: #fff7ed;  border-top-color: #f97316; }
+    .exec-col.impact { background: #eff6ff;  border-top-color: #3b82f6; }
+
+    .exec-col-label {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .exec-col p {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    /* Metadata */
+    .meta-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px 28px;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 24px;
+    }
+    @media (max-width: 560px) { .meta-grid { grid-template-columns: 1fr; } }
+
+    .meta-row {
+      display: flex;
+      gap: 10px;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .meta-key { font-size: 15px; font-weight: 800; color: var(--ink); min-width: 90px; flex-shrink: 0; }
+    .meta-val { font-size: 15px; font-weight: 500; color: var(--ink); }
+
+    /* ── CONTENT SECTIONS ──────────────────────────────────────────────────── */
+    .content { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+
+    .cs-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .cs-section.visible { opacity: 1; transform: none; }
+    .cs-section:last-child { border-bottom: none; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .s-num {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+    .s-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      letter-spacing: 0px;
+      line-height: 1.5;
+    }
+
+    .body-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .body-text strong { color: var(--ink-mid); font-weight: 700; }
+    .body-text:last-child { margin-bottom: 0; }
+
+    /* ── IMAGE EMBEDS ──────────────────────────────────────────────────────── */
+    .img-embed {
+      border-radius: var(--r);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin: 32px 0;
+      background: #EDECE8;
+      box-shadow: var(--shadow-sm);
+    }
+    .img-embed iframe { display: block; width: 100%; border: none; }
+    .img-embed img { display: block; width: 100%; height: auto; }
+
+    /* ── PHASE CARDS ───────────────────────────────────────────────────────── */
+    .phase-stack { display: flex; flex-direction: column; gap: 12px; }
+
+    .phase-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px 24px;
+      display: flex;
+      gap: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .phase-badge {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+    .phase-badge.teal   { background: var(--teal-pale);   border: 1px solid var(--teal-border);   color: var(--teal-dark); }
+    .phase-badge.indigo { background: var(--indigo-pale);  border: 1px solid var(--indigo-border);  color: var(--indigo); }
+    .phase-badge.violet { background: var(--violet-pale);  border: 1px solid var(--violet-border);  color: var(--violet); }
+
+    .phase-card h3 { font-size: 16px; font-weight: 800; color: var(--ink); line-height: 1.4; margin-bottom: 6px; }
+    .phase-card h3 .meta { font-weight: 600; color: var(--ink); font-size: 14px; }
+    .phase-card p { font-size: 16px; font-weight: 500; color: var(--ink); line-height: 1.7; margin-bottom: 8px; }
+    .phase-card p:last-child { margin-bottom: 0; }
+    .phase-card ul { margin: 6px 0 8px 18px; padding: 0; }
+    .phase-card li { font-size: 16px; font-weight: 500; color: var(--ink); line-height: 1.7; }
+    .phase-card li strong { color: var(--ink); }
+
+    /* ── FINDING CARDS ─────────────────────────────────────────────────────── */
+    .finding-stack { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+
+    .finding-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px 22px;
+      display: flex;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .finding-num {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+    .finding-num.teal   { background: var(--teal-pale);   border: 1px solid var(--teal-border);   color: var(--teal-dark); }
+    .finding-num.indigo { background: var(--indigo-pale);  border: 1px solid var(--indigo-border);  color: var(--indigo); }
+    .finding-num.violet { background: var(--violet-pale);  border: 1px solid var(--violet-border);  color: var(--violet); }
+
+    .finding-card h3 { font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+    .finding-card p { font-size: 16px; font-weight: 500; color: var(--ink); line-height: 1.7; margin: 0 0 8px 0; }
+    .finding-card p:last-child { margin-bottom: 0; }
+    .finding-card p strong { color: var(--ink); }
+    .finding-card ul { margin: 6px 0 8px 18px; padding: 0; }
+    .finding-card li { font-size: 16px; font-weight: 500; color: var(--ink); line-height: 1.7; }
+
+    /* ── SPEECH BUBBLE ─────────────────────────────────────────────────────── */
+    .speech-bubble-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 32px 0;
+    }
+    .speech-bubble {
+      position: relative;
+      background: #fde6cf;
+      color: #1f2937;
+      border-radius: 999px;
+      padding: 28px 34px 24px;
+      max-width: 620px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+    .speech-bubble p {
+      font-size: 15px;
+      font-weight: 600;
+      font-style: italic;
+      line-height: 1.65;
+      margin: 0 0 8px 0;
+      color: #1f2937;
+      text-align: center;
+    }
+    .speech-bubble .attribution {
+      font-size: 14px;
+      font-weight: 700;
+      font-style: normal;
+      color: #1f2937;
+      margin: 0;
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -18px;
+      left: 64px;
+      width: 0;
+      height: 0;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-top: 20px solid #fde6cf;
+    }
+
+    /* ── IMPACT CARDS ──────────────────────────────────────────────────────── */
+    .impact-stack { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; }
+
+    .impact-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px 24px;
+      display: flex;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .impact-card.teal   { border-left: 3px solid var(--teal); }
+    .impact-card.indigo { border-left: 3px solid var(--indigo); }
+    .impact-card.violet { border-left: 3px solid var(--violet); }
+
+    .impact-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .impact-icon.teal   { background: var(--teal-pale);   border: 1px solid var(--teal-border); }
+    .impact-icon.indigo { background: var(--indigo-pale);  border: 1px solid var(--indigo-border); }
+    .impact-icon.violet { background: var(--violet-pale);  border: 1px solid var(--violet-border); }
+    .impact-icon svg { width: 14px; height: 14px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .impact-icon.teal   svg { stroke: var(--teal-dark); }
+    .impact-icon.indigo svg { stroke: var(--indigo); }
+    .impact-icon.violet svg { stroke: var(--violet); }
+
+    .impact-card h3 { font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+    .impact-card p { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.7; margin: 0; }
+
+    /* ── REFLECTION ────────────────────────────────────────────────────────── */
+    .reflection-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 32px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .reflection-box p { font-size: 16px; font-weight: 500; color: var(--ink); line-height: 1.8; margin-bottom: 16px; }
+    .reflection-box p:last-child { margin-bottom: 0; }
+    .reflection-box strong { color: var(--ink-mid); font-weight: 700; }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: var(--white);
+      color: var(--ink-mid);
+      border: 1px solid var(--border);
+    }
+
+    /* ── CTA ───────────────────────────────────────────────────────────────── */
+    .cta-wrap {
+      padding: 64px 0 80px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .cta-wrap.visible { opacity: 1; transform: none; }
+
+    .cta-box {
+      background: var(--ink);
+      border-radius: var(--r);
+      padding: 52px 40px;
+      text-align: center;
+    }
+    .cta-box .block-label { color: var(--teal); margin-bottom: 12px; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+    .cta-box h2 { font-size: 22px; font-weight: 900; color: var(--white); margin-bottom: 12px; letter-spacing: -0.3px; }
+    .cta-box .cta-sub { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.45); max-width: 400px; margin: 0 auto 32px; line-height: 1.7; }
+    .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--teal);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-primary svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .btn-primary:hover { background: var(--teal-dark); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      color: rgba(255,255,255,0.55);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 100px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-ghost svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.35); }
+
+    /* ── FOOTER ────────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 24px;
+    }
+    .footer-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy { font-size: 12px; font-weight: 500; color: var(--ink-light); }
+    .footer-copy span { color: var(--teal); font-weight: 600; }
+    .footer-link { font-size: 12px; font-weight: 500; color: var(--ink-light); text-decoration: none; transition: color 0.2s; }
+    .footer-link:hover { color: var(--teal); }
+  </style>
+</head>
+
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────────────────────── -->
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html" class="nav-back">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Portfolio
+    </a>
+    <a href="assets/docs/brand-nft-case-study.pdf" target="_blank" class="nav-download">
+      <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      View ACR Poster
+    </a>
+  </div>
+</nav>
+
+<!-- ── PROGRESS ─────────────────────────────────────────────────────────────── -->
+<div id="progress"></div>
+
+<!-- ── SECTION NAV ──────────────────────────────────────────────────────────── -->
+<div class="section-nav">
+  <div class="wrap">
+    <ul>
+      <li><a href="#problem"    class="snav">The Problem</a></li>
+      <li><a href="#methods"    class="snav">Methodological Approach</a></li>
+      <li><a href="#findings"   class="snav">Key Findings</a></li>
+      <li><a href="#impact"     class="snav">Business Impact</a></li>
+      <li><a href="#reflection" class="snav">Reflection</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── HERO ─────────────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-inner">
+
+    <div class="breadcrumb">
+      <span>Case Study 2</span>
+      <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      <span class="active">Brand NFT & Metaverse Adoption</span>
+    </div>
+
+    <h1>
+      The Adoption Gap:<br>
+      <span class="accent">Why Mainstream Users Reject Emerging Tech Hype</span>
+    </h1>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num">100</div>
+        <div class="stat-lbl">Global Brands Audited</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">13</div>
+        <div class="stat-lbl">In-Depth Interviews</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">22%</div>
+        <div class="stat-lbl">Brand Adoption Rate</div>
+      </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="exec-box">
+      <div class="block-label">Executive Summary</div>
+      <p class="exec-intro">As brands rushed into Web3, many assumed consumer readiness based on industry hype. I led a qualitative study <strong>(100 brand audits, 13 interviews)</strong> to uncover the hidden friction points preventing mainstream adoption of NFTs and the Metaverse. My findings provided an evidentiary basis for Publicis Groupe to pivot its client strategy from "novelty-first" to "utility-driven" experiences.</p>
+      <div class="exec-cols">
+        <div class="exec-col goal">
+          <div class="exec-col-label">Goal</div>
+          <p>Identify psychological and structural barriers preventing everyday users from adopting emerging digital products (NFTs/Metaverse).</p>
+        </div>
+        <div class="exec-col result">
+          <div class="exec-col-label">Result</div>
+          <p>Discovered that only <strong>22%</strong> of top brands were actively participating, and identified massive 'Trust and Comprehension Deficit' among consumers.</p>
+        </div>
+        <div class="exec-col impact">
+          <div class="exec-col-label">Impact</div>
+          <p>Developed <strong>50-page</strong> GTM Playbook presented to the EVP of Research, shifting strategy toward "Phygital" utility and segmented onboarding.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role and Scope -->
+    <div class="meta-box">
+      <div class="block-label">Role and Scope</div>
+      <div class="meta-grid">
+        <div class="meta-row">
+          <span class="meta-key">Role</span>
+          <span class="meta-val">Research Lead</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Context</span>
+          <span class="meta-val">Web3 &amp; Metaverse Strategy for Publicis Groupe</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-key">Methods</span>
+          <span class="meta-val">Market Audit (Top 100 Brands), Interviews (N=13)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── CONTENT ───────────────────────────────────────────────────────────────── -->
+<div class="content">
+
+  <!-- ══ THE PROBLEM ══════════════════════════════════════════════════════════ -->
+  <section id="problem" class="cs-section">
+
+    <div class="section-header">
+      <div class="s-num">The Problem</div>
+    </div>
+
+    <p class="body-text" style="color: var(--ink);">
+      During the peak of Web3 expansion, brands prioritized "novelty-first" digital experiences, investing heavily in NFTs and virtual environments based on media hype rather than user data. This created significant business risk: expensive launch failures driven by conceptual gaps between internal corporate excitement and mainstream user reality.
+    </p>
+
+    <p class="body-text" style="color: var(--ink);">
+      To mitigate this, I designed a two-phase research initiative to answer two core questions:
+    </p>
+
+    <ul style="color: var(--ink); font-size: 16px; font-weight: 500; line-height: 1.8; margin: 0 0 16px 20px; padding: 0;">
+      <li><strong style="color: var(--ink);">The Supply Side:</strong> What types of Web3/Metaverse experiences are brands actually deploying?</li>
+      <li><strong style="color: var(--ink);">The Demand Side:</strong> How do everyday users mentally model these technologies, and what psychological barriers prevent mainstream adoption?</li>
+    </ul>
+
+    <div class="img-embed">
+      <img src="images/brand-nft-images/image1.png" alt="Brand NFT and Metaverse adoption landscape overview" />
+    </div>
+
+  </section>
+
+  <!-- ══ METHODOLOGICAL APPROACH ══════════════════════════════════════════════ -->
+  <section id="methods" class="cs-section">
+
+    <div class="section-header">
+      <div class="s-num">Methodological Approach</div>
+    </div>
+
+    <p class="body-text" style="color: var(--ink); font-size: 17px;">
+      I designed a two-track research initiative to capture both the supply side (what brands were building) and the demand side (how users interpreted these experiences).
+    </p>
+
+    <div class="phase-stack">
+
+      <div class="phase-card">
+        <div class="phase-badge teal">1</div>
+        <div>
+          <h3>Competitive Market Audit <span class="meta">· Interbrand Top 100 Global Brands</span></h3>
+          <p>I conducted a systematic audit of Interbrand Top 100 Global Brands to cut through industry hype and establish a baseline for real-world market adoption. Each brand was evaluated across three strategic pillars:</p>
+          <ul>
+            <li><strong>Market Penetration:</strong> Verified active NFT or Metaverse initiatives versus "PR-only" announcements to establish baseline for true brand commitment.</li>
+            <li><strong>Experience Taxonomy:</strong> Categorized initiatives ranging from speculative digital collectibles and virtual environments to utility-driven digital ownership.</li>
+            <li><strong>Value Strategy:</strong> Deconstructed how brands translated complex blockchain terminology into consumer-facing benefits and "Phygital" (Physical + Digital) rewards.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="img-embed" style="background: #ffffff;">
+      <img src="images/brand-nft-images/image2.png" alt="Market audit findings: brand adoption rates by sector" style="mix-blend-mode: multiply;" />
+    </div>
+
+    <div class="phase-stack">
+
+      <div class="phase-card">
+        <div class="phase-badge indigo">2</div>
+        <div>
+          <h3>Mental Model Interviews <span class="meta">· N=13 Mainstream Consumers</span></h3>
+          <p>I conducted <strong>13 semi-structured interviews</strong> (30–60 minutes each) with non-technical, mainstream consumers to capture broader user perspective. I performed thematic coding across <strong>216 pages</strong> of interview transcripts to identify recurring friction points, investigating how users mentally model digital ownership, focusing on awareness and perceived benefits versus risks.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </section>
+
+  <!-- ══ KEY FINDINGS ══════════════════════════════════════════════════════════ -->
+  <section id="findings" class="cs-section">
+
+    <div class="section-header">
+      <div class="s-num">Key Findings</div>
+    </div>
+
+    <p class="body-text" style="color: var(--ink);">
+      The data revealed a clear disconnect: brands were designing for novelty, while mainstream consumers were evaluating the technology through the lens of trust, clarity, and practical value. Three barriers consistently emerged.
+    </p>
+
+    <div class="finding-stack">
+
+      <div class="finding-card">
+        <div class="finding-num teal">1.</div>
+        <div>
+          <h3>Trust and Comprehension Deficit</h3>
+          <ul>
+            <li>The primary barrier to adoption was <strong>conceptual confusion and deep-seated skepticism</strong>. Users struggled to understand how digital ownership worked and expressed concerns about fraud, legitimacy, and long-term value.</li>
+            <li>Beyond conceptual confusion, users faced severe structural barriers: <strong>accessibility gaps, complex wallet setups, lack of platform regulation, and acute ethical concerns regarding privacy.</strong></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="speech-bubble-wrap">
+      <div class="speech-bubble">
+        <p>"It is a really hard concept for me to digest. I know my husband talked about it, the cyber currency and he is talking about investing in it, and I am like, 'I don't understand what you are saying. So, this is a very puzzling concept for me.'"</p>
+        <p class="attribution">— Study Participant 8</p>
+      </div>
+    </div>
+
+
+    <div class="finding-stack">
+
+      <div class="finding-card">
+        <div class="finding-num indigo">2.</div>
+        <div>
+          <h3>Demand for "Phygital" Utility</h3>
+          <p>Users rejected technology positioned as pure novelty. Interest only spiked when digital asset provided real-life bridge, coupling digital ownership with tangible physical product or exclusive real-world access.</p>
+          <ul>
+            <li><strong>The Physical Preference:</strong> Users struggled to assign value to digital-only assets. Without a "real" version (like physical sneaker), digital representation was viewed as visual placeholder rather than product.</li>
+            <li><strong>Status vs. Utility:</strong> Users rejected NFTs that functioned merely as "social identity products" for show. Instead, they demanded practical utility, such as using digital asset as membership pass to real-world events or cause-related marketing campaigns.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="speech-bubble-wrap">
+      <div class="speech-bubble">
+        <p>"I would prefer a physical sneaker over a digital sneaker. I mean, a digital sneaker is just…not a real sneaker. It is just a picture or a good visual representation of a sneaker which is not the same thing as the sneaker itself."</p>
+        <p class="attribution">— Study Participant 2</p>
+      </div>
+    </div>
+
+    <div class="finding-stack">
+
+      <div class="finding-card">
+        <div class="finding-num violet">3.</div>
+        <div>
+          <h3>The Segmentation Divide</h3>
+          <p>The data revealed a fundamental split in user motivation. Because these two groups have opposite needs, a single product strategy cannot effectively serve both.</p>
+          <ul>
+            <li><strong>Early Adopters:</strong> Motivated by scarcity, digital status, and speculation, they are willing to overlook high technical friction in exchange for "social capital" and investment potential.</li>
+            <li><strong>Mainstream Consumers:</strong> Motivated by radical simplicity and practical utility, these users require low-risk entry points and clear, real-world benefits before they will engage.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ══ RESEARCH IMPACT ═══════════════════════════════════════════════════════ -->
+  <section id="impact" class="cs-section">
+
+    <div class="section-header">
+      <div class="s-num">Business Impact</div>
+    </div>
+
+    <p class="body-text" style="color: var(--ink);">
+      Novelty alone cannot drive mainstream adoption. I synthesized my findings into a <strong style="color: var(--ink);">50-page GTM Playbook</strong> presented to Publicis executive leadership. The playbook established that for emerging tech to scale, three conditions must be met (<strong style="color: var(--ink);">Trust, Clarity, and Utility</strong>), leading to three core strategic shifts:
+    </p>
+
+    <div class="img-embed">
+      <img src="images/brand-nft-images/image5.png" alt="Core insight framework: Trust, Clarity, and Utility for mainstream adoption" />
+    </div>
+
+    <div class="impact-stack">
+
+      <div class="impact-card teal">
+        <div class="impact-icon teal">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h3>Reduce Trust Friction</h3>
+          <p>Reframed "Trust" as a technical requirement and prioritized transparent onboarding and institutional trust signals over "cool" UI.</p>
+        </div>
+      </div>
+
+      <div class="impact-card indigo">
+        <div class="impact-icon indigo">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div>
+          <h3>Make Value Immediately Obvious</h3>
+          <p>Instead of relying on Web3 buzzwords, I advised brands to anchor digital initiatives to concrete user benefits by linking digital experiences to physical products or exclusive membership benefits.</p>
+        </div>
+      </div>
+
+      <div class="impact-card violet">
+        <div class="impact-icon violet">
+          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <div>
+          <h3>Segmented Onboarding</h3>
+          <p>Developed two distinct strategies: an Early Adopter Strategy (emphasizing scarcity and status) and a Mainstream Strategy (prioritizing simplicity and practical value). This segmentation helped product teams clarify who they were building for and why.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ══ REFLECTION ════════════════════════════════════════════════════════════ -->
+  <section id="reflection" class="cs-section">
+
+    <div class="section-header">
+      <div class="s-num">Reflection</div>
+    </div>
+
+    <div class="reflection-box">
+      <p>
+        Studying enthusiastic early adopters reveals what is possible; studying the hesitant or confused user reveals what is required for mainstream adoption. By focusing on friction rather than hype, I helped teams move from niche experiments to building scalable, value-driven products.
+      </p>
+    </div>
+
+
+  </section>
+
+
+</div><!-- /content -->
+
+<!-- ── FOOTER ────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 <span>Prativa Subedi</span></span>
+    <a href="index.html" class="footer-link">← Back to prativasubedi.com</a>
+  </div>
+</footer>
+
+<script>
+  // Reading progress
+  const bar = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    bar.style.width = Math.min(100, pct * 100) + '%';
+  }, { passive: true });
+
+  // Fade-in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.cs-section, .cta-wrap').forEach(el => observer.observe(el));
+
+  // Section nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.snav');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.snav[href="#${e.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+</script>
+
+</body>
+</html>

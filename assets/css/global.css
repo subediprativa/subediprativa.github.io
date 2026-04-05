@@ -1,0 +1,198 @@
+/* ===== GLOBAL.CSS — Prativa Subedi Personal Site ===== */
+
+/* Smooth scrolling & font base */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== GLASSMORPHISM CARD ===== */
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15);
+}
+
+.dark .glass-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ===== GRADIENT TEXT ===== */
+.gradient-text {
+  background: linear-gradient(135deg, #14b8a6 0%, #4f46e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== GRADIENT BORDER BUTTON ===== */
+.btn-gradient {
+  background: linear-gradient(135deg, #14b8a6, #4f46e5);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-gradient:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ===== METHOD BADGES ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  margin: 2px;
+  white-space: nowrap;
+}
+
+.badge-teal {
+  background: rgba(20, 184, 166, 0.15);
+  color: #0d9488;
+  border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+.badge-indigo {
+  background: rgba(79, 70, 229, 0.12);
+  color: #4f46e5;
+  border: 1px solid rgba(79, 70, 229, 0.25);
+}
+
+.badge-violet {
+  background: rgba(139, 92, 246, 0.12);
+  color: #7c3aed;
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.badge-sky {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0284c7;
+  border: 1px solid rgba(14, 165, 233, 0.25);
+}
+
+.badge-amber {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.dark .badge-teal  { background: rgba(20,184,166,0.2);  color: #5eead4; }
+.dark .badge-indigo{ background: rgba(79,70,229,0.2);   color: #a5b4fc; }
+.dark .badge-violet{ background: rgba(139,92,246,0.2);  color: #c4b5fd; }
+.dark .badge-sky   { background: rgba(14,165,233,0.2);  color: #7dd3fc; }
+.dark .badge-amber { background: rgba(245,158,11,0.2);  color: #fcd34d; }
+
+.badge-emerald {
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.dark .badge-emerald { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+
+.btn-emerald {
+  background: linear-gradient(135deg, #10b981, #059669);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.btn-emerald:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.btn-violet {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.btn-violet:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.btn-amber {
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.btn-amber:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.badge-brown {
+  background: rgba(120, 53, 15, 0.1);
+  color: #78350f;
+  border: 1px solid rgba(120, 53, 15, 0.25);
+}
+.dark .badge-brown { background: rgba(180,83,9,0.2); color: #fcd34d; }
+
+.btn-brown {
+  background: linear-gradient(135deg, #92400e, #78350f);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.btn-brown:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* ===== HERO PARTICLES / GRID BACKGROUND ===== */
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(79, 70, 229, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 70, 229, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.dark .hero-grid {
+  background-image:
+    linear-gradient(rgba(79, 70, 229, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 70, 229, 0.08) 1px, transparent 1px);
+}
+
+/* ===== NAV BLUR ===== */
+.nav-blur {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ===== SECTION FADE-IN ANIMATION ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== SKILL BAR ===== */
+.skill-bar-fill {
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #14b8a6, #4f46e5);
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== DARK MODE TOGGLE ===== */
+#dark-toggle {
+  transition: background 0.3s ease;
+}
+
+/* ===== PORTFOLIO CARD OVERLAY ===== */
+.card-overlay {
+  background: linear-gradient(180deg, transparent 40%, rgba(15, 23, 42, 0.85) 100%);
+}
+
+/* ===== TIMELINE DOT ===== */
+.timeline-dot::before {
+  content: '';
+  position: absolute;
+  left: -1.35rem;
+  top: 0.35rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #14b8a6, #4f46e5);
+}
